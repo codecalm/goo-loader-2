@@ -1,0 +1,74 @@
+$dot-color: #D8312E;
+$dot-size: 24px;
+$circle-size: 65px;
+
+$animation-time: 2.2s;
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #FFFBF5;
+}
+
+.dots {
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+
+	filter: url(#goo);
+}
+
+.dot {
+	width: 0;
+	height: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+
+	&:before {
+		content: '';
+		width: $dot-size;
+		height: $dot-size;
+		border-radius: 50%;
+		background: $dot-color;
+		position: absolute;
+		left: 50%;
+		top: -($circle-size);
+		margin-left: -($dot-size/2);
+		margin-top: -($dot-size/2);
+	}
+
+	@for $i from 0 to 8 {
+		&:nth-child(#{$i + 1}) {
+			transform: rotate($i * 45deg);
+		}
+	}
+
+	@keyframes dot-rotate {
+		@for $i from 0 to 9 {
+			#{$i*12.5%} {
+				transform: rotate($i * -45deg);
+			}
+		}
+	}
+
+	&:nth-child(9) {
+		animation: dot-rotate $animation-time ease infinite;
+
+		&:before {
+			width: $dot-size + 6px;
+			height: $dot-size + 6px;
+		}
+	}
+}
